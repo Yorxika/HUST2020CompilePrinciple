@@ -26,7 +26,7 @@ void display(struct ASTNode *,int);
 
 
 //  %type 定义非终结符的语义值类型
-%type  <ptr> program ExtDefList ExtDef Specifier ExtDecList FuncDec CompSt VarList VarDec ParamDec Stmt StmList DefList Def DecList Dec Exp Args ArrayDec FORDEC INDEX FOREXP1 FOREXP2 FOREXP3
+%type  <ptr> program ExtDefList ExtDef  Specifier ExtDecList FuncDec CompSt VarList VarDec ParamDec Stmt StmList DefList Def DecList Dec Exp Args ArrayDec FORDEC INDEX FOREXP1 FOREXP2 FOREXP3
 
 //% token 定义终结符的语义值类型
 %token <type_int> INT              /*指定INT的语义值是type_int，有词法分析得到的数值*/
@@ -36,15 +36,15 @@ void display(struct ASTNode *,int);
 
 
 %token LP RP LB RB LC RC SEMI COMMA      /*用bison对该文件编译时，带参数-d，生成的.tab.h中给这些单词进行编码，可在lex.l中包含parser.tab.h使用这些单词种类码*/
-%token COMADD COMSUB COMSTAR COMDIV COMMOD PLUS MINUS STAR DIV MOD ASSIGNOP AND OR NOT IF ELSE WHILE RETURN FOR SWITCH CASE COLON DEFAULT AUTOADD AUTOSUB //增加了+= -= *= /= %=
+%token COMADD COMSUB COMSTAR COMDIV COMMOD PLUS MINUS STAR DIV MOD ASSIGNOP AND OR NOT IF ELSE WHILE RETURN FOR AUTOADD AUTOSUB //增加了+= -= *= /= %=
 %token BREAK CONTINUE 
 
 /*以下为接在上述token后依次编码的枚举常量，作为AST结点类型标记*/
-%token EXT_DEF_LIST EXT_VAR_DEF FUNC_DEF FUNC_DEC EXT_DEC_LIST PARAM_LIST PARAM_DEC VAR_DEF DEC_LIST DEF_LIST COMP_STM STM_LIST EXP_STMT IF_THEN IF_THEN_ELSE
-%token FUNC_CALL ARGS FUNCTION PARAM ARG CALL LABEL GOTO JLT JLE JGT JGE EQ NEQ ARRAY_DEC FOR_DEC CONTINUE_NODE BREAK_NODE BLANK ARRAY_DF FOR_EXP1 FOR_EXP2 FOR_EXP3 FOR_NODE ARRAY_CALL
+/*%token EXT_DEF_LIST EXT_VAR_DEF FUNC_DEF FUNC_DEC EXT_DEC_LIST PARAM_LIST PARAM_DEC VAR_DEF DEC_LIST DEF_LIST COMP_STM STM_LIST EXP_STMT IF_THEN IF_THEN_ELSE
+%token FUNC_CALL ARGS FUNCTION PARAM ARG CALL LABEL GOTO JLT JLE JGT JGE EQ NEQ ARRAY_DEC FOR_DEC CONTINUE_NODE BREAK_NODE BLANK ARRAY_DF FOR_EXP1 FOR_EXP2 FOR_EXP3 FOR_NODE ARRAY_CALL*/
 
 //这里是优先级定义
-%right COMADD COMSUB COMSTAR COMDIV COMMOD //+=这类复合运算优先级大于=
+%left COMADD COMSUB COMSTAR COMDIV COMMOD //+=这类复合运算优先级大于=
 %left ASSIGNOP
 %left OR
 %left AND
@@ -216,8 +216,7 @@ Args:    Exp COMMA Args    {$$=mknode(2,ARGS,yylineno,$1,$3);}
 %%
 
 int main(int argc, char *argv[]){
-	//yyin=fopen(argv[1],"r");
-	yyin = fopen("temp.c","r");
+	yyin=fopen(argv[1],"r");
 	if (!yyin) return -1;
 	yylineno=1;
 	yyparse();

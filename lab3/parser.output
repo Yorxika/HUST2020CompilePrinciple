@@ -1,49 +1,5 @@
 Terminals unused in grammar
 
-   SWITCH
-   CASE
-   COLON
-   DEFAULT
-   EXT_DEF_LIST
-   EXT_VAR_DEF
-   FUNC_DEF
-   FUNC_DEC
-   EXT_DEC_LIST
-   PARAM_LIST
-   PARAM_DEC
-   VAR_DEF
-   DEC_LIST
-   DEF_LIST
-   COMP_STM
-   STM_LIST
-   EXP_STMT
-   IF_THEN
-   IF_THEN_ELSE
-   FUNC_CALL
-   ARGS
-   FUNCTION
-   PARAM
-   ARG
-   CALL
-   LABEL
-   GOTO
-   JLT
-   JLE
-   JGT
-   JGE
-   EQ
-   NEQ
-   ARRAY_DEC
-   FOR_DEC
-   CONTINUE_NODE
-   BREAK_NODE
-   BLANK
-   ARRAY_DF
-   FOR_EXP1
-   FOR_EXP2
-   FOR_EXP3
-   FOR_NODE
-   ARRAY_CALL
    DPLUS
 
 
@@ -200,113 +156,69 @@ ELSE (287) 29
 WHILE (288) 30
 RETURN (289) 27
 FOR (290) 31
-SWITCH (291)
-CASE (292)
-COLON (293)
-DEFAULT (294)
-AUTOADD (295) 74 75
-AUTOSUB (296) 76 77
-BREAK (297) 32
-CONTINUE (298) 33
-EXT_DEF_LIST (299)
-EXT_VAR_DEF (300)
-FUNC_DEF (301)
-FUNC_DEC (302)
-EXT_DEC_LIST (303)
-PARAM_LIST (304)
-PARAM_DEC (305)
-VAR_DEF (306)
-DEC_LIST (307)
-DEF_LIST (308)
-COMP_STM (309)
-STM_LIST (310)
-EXP_STMT (311)
-IF_THEN (312)
-IF_THEN_ELSE (313)
-FUNC_CALL (314)
-ARGS (315)
-FUNCTION (316)
-PARAM (317)
-ARG (318)
-CALL (319)
-LABEL (320)
-GOTO (321)
-JLT (322)
-JLE (323)
-JGT (324)
-JGE (325)
-EQ (326)
-NEQ (327)
-ARRAY_DEC (328)
-FOR_DEC (329)
-CONTINUE_NODE (330)
-BREAK_NODE (331)
-BLANK (332)
-ARRAY_DF (333)
-FOR_EXP1 (334)
-FOR_EXP2 (335)
-FOR_EXP3 (336)
-FOR_NODE (337)
-ARRAY_CALL (338)
-DPLUS (339)
-UMINUS (340)
-LOWER_THEN_ELSE (341)
+AUTOADD (291) 74 75
+AUTOSUB (292) 76 77
+BREAK (293) 32
+CONTINUE (294) 33
+DPLUS (295)
+UMINUS (296)
+LOWER_THEN_ELSE (297)
 
 
 Nonterminals, with rules where they appear
 
-$accept (87)
+$accept (43)
     on left: 0
-program (88)
+program (44)
     on left: 1, on right: 0
-ExtDefList (89)
+ExtDefList (45)
     on left: 2 3, on right: 1 3
-ExtDef (90)
+ExtDef (46)
     on left: 4 5 6, on right: 3
-Specifier (91)
+Specifier (47)
     on left: 7, on right: 4 5 21 44 52
-ExtDecList (92)
+ExtDecList (48)
     on left: 8 9, on right: 4 9
-VarDec (93)
+VarDec (49)
     on left: 10 11, on right: 8 9 21 55 56
-ArrayDec (94)
+ArrayDec (50)
     on left: 12 13 14, on right: 11 13
-INDEX (95)
+INDEX (51)
     on left: 15, on right: 12 13
-FuncDec (96)
+FuncDec (52)
     on left: 16 17 18, on right: 5
-VarList (97)
+VarList (53)
     on left: 19 20, on right: 16 20
-ParamDec (98)
+ParamDec (54)
     on left: 21, on right: 19 20
-CompSt (99)
+CompSt (55)
     on left: 22, on right: 5 26
-StmList (100)
+StmList (56)
     on left: 23 24, on right: 22 24
-Stmt (101)
+Stmt (57)
     on left: 25 26 27 28 29 30 31 32 33 34, on right: 24 28 29 30 31
-FORDEC (102)
+FORDEC (58)
     on left: 35 36 37 38 39 40 41 42, on right: 31
-FOREXP1 (103)
+FOREXP1 (59)
     on left: 43 44, on right: 35 36 37 38
-FOREXP2 (104)
+FOREXP2 (60)
     on left: 45 46, on right: 35 37 39 40 45
-FOREXP3 (105)
+FOREXP3 (61)
     on left: 47 48, on right: 35 36 39 41 47
-DefList (106)
+DefList (62)
     on left: 49 50 51, on right: 22 50
-Def (107)
+Def (63)
     on left: 52, on right: 50
-DecList (108)
+DecList (64)
     on left: 53 54, on right: 43 44 52 54
-Dec (109)
+Dec (65)
     on left: 55 56, on right: 53 54
-Exp (110)
+Exp (66)
     on left: 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74
     75 76 77 78 79 80 81 82 83 84 85, on right: 25 27 28 29 30 45 46
     47 48 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74
     75 76 77 81 86 87
-Args (111)
+Args (67)
     on left: 86 87, on right: 78 79 86
 
 
@@ -2101,11 +2013,6 @@ state 123
 
     RELOP     shift, and go to state 88
     LB        shift, and go to state 89
-    COMADD    shift, and go to state 91
-    COMSUB    shift, and go to state 92
-    COMSTAR   shift, and go to state 93
-    COMDIV    shift, and go to state 94
-    COMMOD    shift, and go to state 95
     PLUS      shift, and go to state 96
     MINUS     shift, and go to state 97
     STAR      shift, and go to state 98
@@ -2143,11 +2050,6 @@ state 124
 
     RELOP     shift, and go to state 88
     LB        shift, and go to state 89
-    COMADD    shift, and go to state 91
-    COMSUB    shift, and go to state 92
-    COMSTAR   shift, and go to state 93
-    COMDIV    shift, and go to state 94
-    COMMOD    shift, and go to state 95
     PLUS      shift, and go to state 96
     MINUS     shift, and go to state 97
     STAR      shift, and go to state 98
@@ -2185,11 +2087,6 @@ state 125
 
     RELOP     shift, and go to state 88
     LB        shift, and go to state 89
-    COMADD    shift, and go to state 91
-    COMSUB    shift, and go to state 92
-    COMSTAR   shift, and go to state 93
-    COMDIV    shift, and go to state 94
-    COMMOD    shift, and go to state 95
     PLUS      shift, and go to state 96
     MINUS     shift, and go to state 97
     STAR      shift, and go to state 98
@@ -2227,11 +2124,6 @@ state 126
 
     RELOP     shift, and go to state 88
     LB        shift, and go to state 89
-    COMADD    shift, and go to state 91
-    COMSUB    shift, and go to state 92
-    COMSTAR   shift, and go to state 93
-    COMDIV    shift, and go to state 94
-    COMMOD    shift, and go to state 95
     PLUS      shift, and go to state 96
     MINUS     shift, and go to state 97
     STAR      shift, and go to state 98
@@ -2269,11 +2161,6 @@ state 127
 
     RELOP     shift, and go to state 88
     LB        shift, and go to state 89
-    COMADD    shift, and go to state 91
-    COMSUB    shift, and go to state 92
-    COMSTAR   shift, and go to state 93
-    COMDIV    shift, and go to state 94
-    COMMOD    shift, and go to state 95
     PLUS      shift, and go to state 96
     MINUS     shift, and go to state 97
     STAR      shift, and go to state 98

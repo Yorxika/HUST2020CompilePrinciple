@@ -72,57 +72,13 @@
      WHILE = 288,
      RETURN = 289,
      FOR = 290,
-     SWITCH = 291,
-     CASE = 292,
-     COLON = 293,
-     DEFAULT = 294,
-     AUTOADD = 295,
-     AUTOSUB = 296,
-     BREAK = 297,
-     CONTINUE = 298,
-     EXT_DEF_LIST = 299,
-     EXT_VAR_DEF = 300,
-     FUNC_DEF = 301,
-     FUNC_DEC = 302,
-     EXT_DEC_LIST = 303,
-     PARAM_LIST = 304,
-     PARAM_DEC = 305,
-     VAR_DEF = 306,
-     DEC_LIST = 307,
-     DEF_LIST = 308,
-     COMP_STM = 309,
-     STM_LIST = 310,
-     EXP_STMT = 311,
-     IF_THEN = 312,
-     IF_THEN_ELSE = 313,
-     FUNC_CALL = 314,
-     ARGS = 315,
-     FUNCTION = 316,
-     PARAM = 317,
-     ARG = 318,
-     CALL = 319,
-     LABEL = 320,
-     GOTO = 321,
-     JLT = 322,
-     JLE = 323,
-     JGT = 324,
-     JGE = 325,
-     EQ = 326,
-     NEQ = 327,
-     ARRAY_DEC = 328,
-     FOR_DEC = 329,
-     CONTINUE_NODE = 330,
-     BREAK_NODE = 331,
-     BLANK = 332,
-     ARRAY_DF = 333,
-     FOR_EXP1 = 334,
-     FOR_EXP2 = 335,
-     FOR_EXP3 = 336,
-     FOR_NODE = 337,
-     ARRAY_CALL = 338,
-     DPLUS = 339,
-     UMINUS = 340,
-     LOWER_THEN_ELSE = 341
+     AUTOADD = 291,
+     AUTOSUB = 292,
+     BREAK = 293,
+     CONTINUE = 294,
+     DPLUS = 295,
+     UMINUS = 296,
+     LOWER_THEN_ELSE = 297
    };
 #endif
 
@@ -133,7 +89,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 19 "./parser.y"
+#line 19 "parser.y"
 
 	int    type_int;
 	float  type_float;
@@ -144,7 +100,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 148 "parser.tab.h"
+#line 104 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
