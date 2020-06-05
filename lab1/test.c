@@ -18,7 +18,7 @@ float m,n;
 float fun(int x,char y)
 {
     int a[10],b[10][20];
-    i+j=b[3,5];
+    //i+j=b[3,5];
     j=0789;
     m=0xAB;
     return 1;
@@ -32,7 +32,6 @@ float test1(int x,char y)
 */  a='a';
       b='\n';
     a*/*b+x*/b;
-	char a;
-    return 1;
+   ;; return 1;
 }
 

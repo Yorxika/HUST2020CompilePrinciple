@@ -1,37 +1,328 @@
-char c1[2][3][4];
-int main(){
-    int i,j,k;
-    float x,y;
-    i+=-i*++j;
-    c[1][2]=10.12;
-    for(int i = 0;i < 10; i++)
-    {
-    	if(i != j) break;
-    	else continue;
-    };
-    return 'a';
-}
-
-
-int i,j;
-float m,n;
-float fun(int x,char y)
-{
-    int a[10],b[10][20];
-    i+j=b[3,5];
-    j=0789;
-    m=0xAB;
-    return 1;
-
-}
-
-float test1(int x,char y)
-{   int a,b;  //注释1
- /*  注释2
-     a=0；//
-*/  a='a';
-      b='\n';
-    a*/*b+x*/b;
-   ;; return 1;
-}
-
+(char, TYPE-CHAR)
+(c1, ID)
+([, LB)
+(2, INT)
+(], RB)
+([, LB)
+(3, INT)
+(], RB)
+([, LB)
+(4, INT)
+(], RB)
+(;, SEMI)
+(\n, line feed)
+(int, TYPR-INT)
+(main, ID)
+((, LP)
+(), RP)
+({, LC)
+(\n, line feed)
+(int, TYPR-INT)
+(i, ID)
+(,, COMMA)
+(j, ID)
+(,, COMMA)
+(k, ID)
+(;, SEMI)
+(\n, line feed)
+(float, TYPE-FLOAT)
+(x, ID)
+(,, COMMA)
+(y, ID)
+(;, SEMI)
+(\n, line feed)
+(i, ID)
+(+=, COMADD)
+(-, MINUS)
+(i, ID)
+(*, STAR)
+(++, AUTOADD)
+(j, ID)
+(;, SEMI)
+(\n, line feed)
+(c, ID)
+([, LB)
+(1, INT)
+(], RB)
+([, LB)
+(2, INT)
+(], RB)
+(=, ASSIGNOP)
+(10.12, FLOAT)
+(;, SEMI)
+(\n, line feed)
+(for, FOR)
+((, LP)
+(int, TYPR-INT)
+(i, ID)
+(=, ASSIGNOP)
+(0, INT)
+(;, SEMI)
+(i, ID)
+(<, RELOP)
+(10, INT)
+(;, SEMI)
+(i, ID)
+(++, AUTOADD)
+(), RP)
+(\n, line feed)
+({, LC)
+(\n, line feed)
+(if, RETURN)
+((, LP)
+(i, ID)
+(!=, RELOP)
+(j, ID)
+(), RP)
+(break, BREAK)
+(;, SEMI)
+(\n, line feed)
+(else, ELSE)
+(continue, CONTINUE)
+(;, SEMI)
+(\n, line feed)
+(}, RC)
+(;, SEMI)
+(\n, line feed)
+(return, RETURN)
+('a', CHAR)
+(;, SEMI)
+(\n, line feed)
+(}, RC)
+(\n, line feed)
+(\n, line feed)
+(\n, line feed)
+(int, TYPR-INT)
+(i, ID)
+(,, COMMA)
+(j, ID)
+(;, SEMI)
+(\n, line feed)
+(float, TYPE-FLOAT)
+(m, ID)
+(,, COMMA)
+(n, ID)
+(;, SEMI)
+(\n, line feed)
+(float, TYPE-FLOAT)
+(fun, ID)
+((, LP)
+(int, TYPR-INT)
+(x, ID)
+(,, COMMA)
+(char, TYPE-CHAR)
+(y, ID)
+(), RP)
+(\n, line feed)
+({, LC)
+(\n, line feed)
+(int, TYPR-INT)
+(a, ID)
+([, LB)
+(10, INT)
+(], RB)
+(,, COMMA)
+(b, ID)
+([, LB)
+(10, INT)
+(], RB)
+([, LB)
+(20, INT)
+(], RB)
+(;, SEMI)
+(\n, line feed)
+(//i+j=b[3,5];, line comment)
+(\n, line feed)
+(j, ID)
+(=, ASSIGNOP)
+(0789, INT)
+(;, SEMI)
+(\n, line feed)
+(m, ID)
+(=, ASSIGNOP)
+(0xAB, INT)
+(;, SEMI)
+(\n, line feed)
+(return, RETURN)
+(1, INT)
+(;, SEMI)
+(\n, line feed)
+(\n, line feed)
+(}, RC)
+(\n, line feed)
+(\n, line feed)
+(float, TYPE-FLOAT)
+(test1, ID)
+((, LP)
+(int, TYPR-INT)
+(x, ID)
+(,, COMMA)
+(char, TYPE-CHAR)
+(y, ID)
+(), RP)
+(\n, line feed)
+({, LC)
+(int, TYPR-INT)
+(a, ID)
+(,, COMMA)
+(b, ID)
+(;, SEMI)
+(//注释1, line comment)
+(\n, line feed)
+(a, ID)
+(=, ASSIGNOP)
+('a', CHAR)
+(;, SEMI)
+(\n, line feed)
+(b, ID)
+(=, ASSIGNOP)
+('\n', CHAR)
+(;, SEMI)
+(\n, line feed)
+(a, ID)
+(*, STAR)
+(b, ID)
+(;, SEMI)
+(\n, line feed)
+(;, SEMI)
+(;, SEMI)
+(return, RETURN)
+(1, INT)
+(;, SEMI)
+(\n, line feed)
+(}, RC)
+(\n, line feed)
+(\n, line feed)
+ 外部变量定义：(1)
+   类型： char
+   变量名：
+       数组 c1[2][3][4]
+ 函数定义：(13)
+   类型： int
+   函数名：main
+      无参函数
+   复合语句：(13)
+      复合语句的变量定义部分：
+         局部变量定义：(3)
+            类型： int
+            变量名：
+                   i
+                   j
+                   k
+         局部变量定义：(4)
+            类型： float
+            变量名：
+                   x
+                   y
+      复合语句的语句部分：
+         表达式语句：(5)
+            COMADD
+               ID： i
+               STAR
+                  UMINUS
+                     ID： i
+                  AUTOADD
+                     ID： j
+         表达式语句：(6)
+            ASSIGNOP
+               ID： c
+               数组下标：
+               INT：1
+               数组下标：
+               INT：2
+               FLAOT：10.120000
+         FOR循环语句：
+                  FOR循环初始语句
+                     类型： int
+                     变量名：
+                            i ASSIGNOP
+                              INT：0
+                  FOR循环条件语句
+                     <
+                        ID： i
+                        INT：10
+                     <
+                        ID： i
+                        INT：10
+                  FOR循环结束条件
+                     AUTOADD
+                        ID： i
+            循环体：
+               复合语句：(11)
+                  复合语句的变量定义部分：
+                  复合语句的语句部分：
+                     条件语句(IF_THEN_ELSE)：(10)
+                        条件：
+                           !=
+                              ID： i
+                              ID： j
+                        IF子句：(10)
+                           Break语句
+                        ELSE子句：(10)
+                           Continue语句
+         返回语句：(12)
+            CHAR: a
+ 外部变量定义：(16)
+   类型： int
+   变量名：
+      ID： i
+      ID： j
+ 外部变量定义：(17)
+   类型： float
+   变量名：
+      ID： m
+      ID： n
+ 函数定义：(26)
+   类型： float
+   函数名：fun
+   函数形参：
+      类型：int, 参数名：x
+      类型：char, 参数名：y
+   复合语句：(26)
+      复合语句的变量定义部分：
+         局部变量定义：(20)
+            类型： int
+            变量名：
+                   数组 a
+             数组 a[10]
+                   数组 b
+             数组 b[10][20]
+      复合语句的语句部分：
+         表达式语句：(22)
+            ASSIGNOP
+               ID： j
+               INT：7
+         表达式语句：(23)
+            ASSIGNOP
+               ID： m
+               INT：171
+         返回语句：(24)
+            INT：1
+ 函数定义：(36)
+   类型： float
+   函数名：test1
+   函数形参：
+      类型：int, 参数名：x
+      类型：char, 参数名：y
+   复合语句：(36)
+      复合语句的变量定义部分：
+         局部变量定义：(29)
+            类型： int
+            变量名：
+                   a
+                   b
+      复合语句的语句部分：
+         表达式语句：(32)
+            ASSIGNOP
+               ID： a
+               CHAR: a
+         表达式语句：(33)
+            ASSIGNOP
+               ID： b
+               CHAR: \n
+         表达式语句：(34)
+            STAR
+               ID： a
+               ID： b
+         返回语句：(35)
+            INT：1
