@@ -1,5 +1,5 @@
 #include "def.h"
-#define DEBUG 0
+#define DEBUG 1
 #define SHOW 0
 
 int LEV = 0;  //锟斤拷锟斤拷锟剿诧拷锟�??1锟�??7
@@ -125,6 +125,7 @@ void prnIR(struct codenode *head)
 		sprintf(resultstr, "%s", h->result.id);
 		switch (h->op)
 		{
+		case ASSIGNARRAY:
 		case ASSIGNOP:
 #if show
 			printf("%s := %s\n", resultstr, opnstr1);
@@ -142,6 +143,11 @@ void prnIR(struct codenode *head)
 #endif
 			fprintf(file, "%s = %s %c %s\n", resultstr, opnstr1,
 					h->op == PLUS ? '+' : h->op == MINUS ? '-' : h->op == STAR ? '*' : h->op == DIV ? '/' : '%', opnstr2);
+			break;
+		case AUTOADD:
+		case AUTOSUB:
+			fprintf(file, "%s = 1\n", opnstr2);
+			fprintf(file, "%s = %s %c %s\n", opnstr1, opnstr1, h->op == AUTOADD ? '+' : '-', opnstr2);
 			break;
 		case FUNCTION:
 #if show
@@ -261,7 +267,7 @@ void prnIR(struct codenode *head)
 //锟斤拷锟斤拷锟斤拷锟街伙拷占锟斤拷锟斤拷锟斤拷锟较拷锟斤拷锟斤拷一锟斤拷锟斤拷�?
 void semantic_error(int line, char *msg1, char *msg2)
 {
-	printf("�?%d�?,%s %s\n", line, msg1, msg2);
+	printf("在第%d行,%s %s\n", line, msg1, msg2);
 }
 
 //锟斤拷示锟斤拷锟脚憋�?
@@ -272,7 +278,7 @@ void prn_symbol()
 	printf("-------------------------------------------------------------------------------------------------\n");
 	printf("|                                       Symbol Table                                            |\n");
 	printf("-------------------------------------------------------------------------------------------------\n");
-	printf("|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\n", "变量�?", "别名", "层号", "类型", "标记", "偏移�?");
+	printf("|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\n", "变量名", "别名", "层号", "类型", "标记", "偏移量");
 	printf("-------------------------------------------------------------------------------------------------\n");
 	/*for (i = 0; i < symbolTable.index; i++)
 		printf("%6s %6s %6d  %6s %4c %6d\n", symbolTable.symbols[i].name, \
@@ -413,7 +419,7 @@ void ext_var_list(struct ASTNode *T)
 		T0 = T->ptr[0];
 		while (T0)
 		{
-			if (T0->ptr[0] && T0->ptr[0]->type_int <= 0 || T0->ptr[0]->type != INT)
+			if (T0->ptr[0] != 0 && (T0->ptr[0]->type_int <= 0 || T0->ptr[0]->type != INT))
 			{
 				semantic_error(T->pos, T->type_id, "数组下标不能为负值或0");
 				return;
@@ -445,7 +451,7 @@ int match_param(int i, struct ASTNode *T)
 		type2 = T->ptr[0]->type;
 		if (type1 != type2)
 		{
-			semantic_error(pos, "", "参数类型不匹�?");
+			semantic_error(pos, "", "参数类型不匹配?");
 			return 0;
 		}
 		T = T->ptr[1];
@@ -746,6 +752,12 @@ void Exp(struct ASTNode *T)
 					strcat(alias, "]");
 					strcpy(result.id, alias);
 					result.offset = T->ptr[0]->offset;
+					opn2.kind = ID;
+					opn2.offset = symbolTable.symbols[T->ptr[0]->ptr[0]->place].offset;
+				    strcpy(opn2.id,symbolTable.symbols[T->ptr[0]->ptr[0]->place].alias);
+					opn2.type = T->ptr[0]->ptr[0]->type;
+					T->code = merge(2, T->code, genIR(ASSIGNARRAY, opn1, opn2, result));
+					break;
 				}
 				T->code = merge(2, T->code, genIR(ASSIGNOP, opn1, opn2, result));
 			}
@@ -856,33 +868,25 @@ void Exp(struct ASTNode *T)
 					semantic_error(T->pos, "", "自增语句左值不为int�?");
 					break;
 				}
-				op = PLUS;
 				T->type = T->ptr[0]->type;
 				T->ptr[0]->offset = T->offset;
 
-				struct ASTNode temp; //锟斤拷锟斤拷一锟斤拷锟斤拷时锟斤拷锟斤�?
-				T->ptr[1] = &temp;
-				T->ptr[1]->kind = INT;
-				T->ptr[1]->type_int = 1; //锟斤拷锟斤拷1
-				T->ptr[1]->offset = T->offset + T->ptr[0]->width + 4;
-				Exp(T->ptr[1]);
-				T->width = T->ptr[0]->width + 2;
-				T->place = T->ptr[0]->place;
+				T->place = fill_Temp(newTemp(), LEV, T->type, 'T', T->offset + T->ptr[0]->width);
 				opn1.kind = ID;
 				strcpy(opn1.id, symbolTable.symbols[T->ptr[0]->place].alias);
 				opn1.type = T->ptr[0]->type;
 				opn1.offset = symbolTable.symbols[T->ptr[0]->place].offset;
 				opn2.kind = ID;
-				strcpy(opn2.id, symbolTable.symbols[T->ptr[1]->place].alias);
-				opn2.type = T->ptr[1]->type;
-				opn2.offset = symbolTable.symbols[T->ptr[1]->place].offset;
-				//锟斤拷锟�???1锟�??7
+				strcpy(opn2.id, symbolTable.symbols[T->place].alias);
+				opn2.type = T->type;
+				opn2.offset = symbolTable.symbols[T->place].offset;
 				result.kind = ID;
 				strcpy(result.id, symbolTable.symbols[T->place].alias);
 				result.type = T->type;
 				result.offset = symbolTable.symbols[T->place].offset;
-				T->code = merge(3, T->ptr[0]->code, T->ptr[1]->code, genIR(op, opn1, opn2, result));
-				T->width = T->ptr[0]->width + T->ptr[1]->width + 4;
+				T->code = merge(2, T->ptr[0]->code, genIR(T->kind, opn1, opn2, result));
+				T->width = T->ptr[0]->width + (T->type == INT ? 4 : 8);
+				break;
 			}
 			/*else if (T->ptr[1]) {
 				Exp(T->ptr[1]);
@@ -930,30 +934,22 @@ void Exp(struct ASTNode *T)
 				T->type = T->ptr[0]->type;
 				T->ptr[0]->offset = T->offset;
 
-				struct ASTNode temp; //锟斤拷锟斤拷一锟斤拷锟斤拷时锟斤拷锟斤�?
-				T->ptr[1] = &temp;
-				T->ptr[1]->kind = INT;
-				T->ptr[1]->type_int = 1; //锟斤拷锟斤拷1
-				T->ptr[1]->offset = T->offset + T->ptr[0]->width + 4;
-				Exp(T->ptr[1]);
-				T->width = T->ptr[0]->width + 2;
-				//锟斤拷锟斤拷锟斤拷式锟斤拷锟斤拷
-				T->place = T->ptr[0]->place;
+				T->place = fill_Temp(newTemp(), LEV, T->type, 'T', T->offset + T->ptr[0]->width);
 				opn1.kind = ID;
 				strcpy(opn1.id, symbolTable.symbols[T->ptr[0]->place].alias);
 				opn1.type = T->ptr[0]->type;
 				opn1.offset = symbolTable.symbols[T->ptr[0]->place].offset;
 				opn2.kind = ID;
-				strcpy(opn2.id, symbolTable.symbols[T->ptr[1]->place].alias);
-				opn2.type = T->ptr[1]->type;
-				opn2.offset = symbolTable.symbols[T->ptr[1]->place].offset;
-				//锟斤拷锟�???1锟�??7
+				strcpy(opn2.id, symbolTable.symbols[T->place].alias);
+				opn2.type = T->type;
+				opn2.offset = symbolTable.symbols[T->place].offset;
 				result.kind = ID;
 				strcpy(result.id, symbolTable.symbols[T->place].alias);
 				result.type = T->type;
 				result.offset = symbolTable.symbols[T->place].offset;
-				T->code = merge(3, T->ptr[0]->code, T->ptr[1]->code, genIR(op, opn1, opn2, result));
-				T->width = T->ptr[0]->width + T->ptr[1]->width + 4;
+				T->code = merge(2, T->ptr[0]->code, genIR(T->kind, opn1, opn2, result));
+				T->width = T->ptr[0]->width + (T->type == INT ? 4 : 8);
+				break;
 			}
 			/*else if (T->ptr[1]){
 				Exp(T->ptr[1]);
@@ -1659,21 +1655,19 @@ void semantic_Analysis(struct ASTNode *T)
 void semantic_Analysis0(struct ASTNode *T)
 {
 	symbolTable.index = 0;
-	breakTable.index = 0;
-	continueTable.index = 0;
 	fillSymbolTable("read", "", 0, INT, 'F', 4);
-	symbolTable.symbols[0].paramnum = 0; //read锟斤拷锟轿参革拷锟斤�?
+	symbolTable.symbols[0].paramnum = 0; //read的形参个数
+	//fillSymbolTable("x", "", 1, INT, 'P', 12);
 	fillSymbolTable("write", "", 0, INT, 'F', 4);
 	symbolTable.symbols[1].paramnum = 1;
-	fillSymbolTable("x", "", 1, INT, 'P', 12);
-	symbol_scope_TX.TX[0] = 0; //锟解部锟斤拷锟斤拷锟节凤拷锟脚憋拷锟叫碉拷锟斤拷始锟斤拷锟斤�??1锟�??70
+	symbol_scope_TX.TX[0] = 0; //外部变量在符号表中的起始序号为0
 	symbol_scope_TX.top = 1;
-	T->offset = 0; //锟解部锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷偏锟斤拷锟斤�?
+	T->offset = 0; // 外部变量在数据区的偏移量
 	semantic_Analysis(T);
 	T->code = splitBlock(T->code);
 	prnIR(T->code);
 	optimize_main(); //进行简单的代码优化
-	//objectCode(T->code);
+	objectCode(T->code);
 }
 
 void callArray(struct ASTNode *T)
@@ -1779,8 +1773,15 @@ void objectCode(struct codenode *head)
 	fprintf(fp, ".data\n");
 	fprintf(fp, "_Prompt: .asciiz \"Enter an integer:  \"\n");
 	fprintf(fp, "_ret: .asciiz \"\\n\"\n");
-	fprintf(fp, ".globl main\n");
+	// fprintf(fp, ".globl main\n");
+	// fprintf(fp, ".text\n");
+	fprintf(fp, ".globl main0\n");
 	fprintf(fp, ".text\n");
+	fprintf(fp, " main0:\n");
+	fprintf(fp, " addi $sp, $sp, 0\n");
+	fprintf(fp, " jal main\n");
+	fprintf(fp, " li $v0,10\n");
+	fprintf(fp, " syscall\n");
 	fprintf(fp, "read:\n");
 	fprintf(fp, "  li $v0,4\n");
 	fprintf(fp, "  la $a0,_Prompt\n");
@@ -1800,6 +1801,21 @@ void objectCode(struct codenode *head)
 	{
 		switch (h->op)
 		{
+		case ASSIGNARRAY:
+		if (h->opn1.kind == INT)
+				fprintf(fp, "  li $t3, %d\n", h->opn1.const_int);
+			else
+			{
+				fprintf(fp, "  lw $t1, %d($sp)\n", h->opn1.offset);
+				fprintf(fp, "  move $t3, $t1\n");
+			}
+			fprintf(fp,"  lw $t2, %d($sp)\n",h->opn2.offset);  //取出I的值
+			int type = h->result.type == CHAR ? 1 : 4;
+			fprintf(fp,"  mul $t2, $t2, %d\n",type);
+			fprintf(fp,"  addi $t2, $t2, %d\n",h->result.offset);
+			fprintf(fp,"  add $t2, $t2, $sp\n");
+			fprintf(fp,"  sw $t3, ($t2)\n");
+			break;
 		case ASSIGNOP:
 			if (h->opn1.kind == INT)
 				fprintf(fp, "  li $t3, %d\n", h->opn1.const_int);
@@ -1822,13 +1838,25 @@ void objectCode(struct codenode *head)
 				fprintf(fp, "  sub $t3,$t1,$t2\n");
 			else if (h->op == STAR)
 				fprintf(fp, "  mul $t3,$t1,$t2\n");
-			else if(h->op == DIV)
+			else if (h->op == DIV)
 			{
 				fprintf(fp, "  div $t1, $t2\n");
 				fprintf(fp, "  mflo $t3\n");
 			}
 			fprintf(fp, "  sw $t3, %d($sp)\n", h->result.offset);
 			break;
+		case AUTOADD:
+		case AUTOSUB:
+			fprintf(fp, "  lw $t1, %d($sp)\n", h->opn1.offset);
+			if (h->op == AUTOADD)
+			{
+				fprintf(fp, "  addi $t2, $t1, 1\n");
+			}
+			else
+			{
+				fprintf(fp, "  addi $t2, $t1, -1\n");
+			}
+			fprintf(fp, "  sw $t2, %d($sp)\n", h->opn1.offset);
 		case FUNCTION:
 			fprintf(fp, "\n%s:\n", h->result.id);
 			if (!strcmp(h->result.id, "main"))

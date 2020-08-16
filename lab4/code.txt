@@ -1,0 +1,67 @@
+BLOCK block1 :
+FUNCTION fibo
+PARAM v5
+temp1 = 0
+IF v5 == temp1 GOTO label3
+BLOCK block2 :
+GOTO label4
+BLOCK block3 :
+LABEL label4 :
+temp2 = 1
+IF v5 == temp2 GOTO label3
+BLOCK block4 :
+GOTO label2
+BLOCK block5 :
+LABEL label3 :
+temp3 = 1
+RETURN temp3
+BLOCK block6 :
+LABEL label2 :
+temp4 = 1
+temp5 = v5 - temp4
+ARG temp5
+temp6 = CALL fibo
+temp7 = 2
+temp8 = v5 - temp7
+ARG temp8
+temp9 = CALL fibo
+temp10 = temp6 + temp9
+RETURN temp10
+BLOCK block7 :
+LABEL label1 :
+FUNCTION main
+temp11 = CALL read
+v7 = temp11
+temp12 = 0
+v9 = temp12
+BLOCK block8 :
+LABEL label10 :
+IF v9 <= v7 GOTO label9
+BLOCK block9 :
+GOTO label8
+BLOCK block10 :
+LABEL label9 :
+ARG v9
+temp13 = CALL fibo
+v8 = temp13
+temp14 = 5
+IF v9 <= temp14 GOTO label13
+BLOCK block11 :
+GOTO label12
+BLOCK block12 :
+LABEL label13 :
+temp15 = CALL read
+v10[v9] = temp15
+BLOCK block13 :
+LABEL label12 :
+ARG v8
+CALL  write
+temp17 = 1
+v9 = v9 + temp17
+GOTO label10
+BLOCK block14 :
+LABEL label8 :
+temp18 = 1
+RETURN temp18
+BLOCK block15 :
+LABEL label5 :

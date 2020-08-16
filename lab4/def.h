@@ -12,6 +12,7 @@
 #define BLOCK -2147483647
 #define ARRAY_LEN 10
 #define boolean -17
+#define ASSIGNARRAY -1144514
 //以下语法树结点类型、三地址结点类型等定义仅供参考，实验时一定要根据自己的理解来定义
 //int LEV;      //层号
 

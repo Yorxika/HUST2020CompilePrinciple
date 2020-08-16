@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "iomanip": "c",
+        "xiosbase": "c",
+        "xlocale": "c"
+    }
+}
